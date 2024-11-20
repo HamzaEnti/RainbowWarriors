@@ -10,12 +10,12 @@ Un gestor de contraseñas seguro que permite almacenar, recuperar, generar, cifr
 
 ```bash
 password_manager/
-├── password_manager.py       # Archivo principal. Orquesta las funciones de la aplicación.
-├── password_storage.py       # Gestiona el almacenamiento seguro de las contraseñas (almacén en archivo o base de datos).
-├── password_encryption.py    # Realiza el cifrado y descifrado de contraseñas para asegurar su privacidad.
-├── password_generator.py     # Genera contraseñas seguras y aleatorias.
+├── pass_manager.py       # Archivo principal. Orquesta las funciones de la aplicación.
+├── pass_storage.py       # Gestiona el almacenamiento seguro de las contraseñas (almacén en archivo o base de datos).
+├── pass_encryption.py    # Realiza el cifrado y descifrado de contraseñas para asegurar su privacidad.
+├── pass_generator.py     # Genera contraseñas seguras y aleatorias.
 ├── authentication.py         # Maneja la autenticación del usuario (por ejemplo, mediante una contraseña maestra).
-└── user_interface.py         # Proporciona la interfaz de usuario (CLI o GUI) para interactuar con el gestor.
+└── gui.py         # Proporciona la interfaz de usuario (CLI o GUI) para interactuar con el gestor.
 ```
 
 ## Funcionalidades
