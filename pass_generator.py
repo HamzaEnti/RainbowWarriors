@@ -1,7 +1,10 @@
+# Ho ha de fer el Nico
 # pass_generator.py
-import random
+import secrets
 import string
 
-def generate_secure_password(length=12):
-    # Generar una contraseña segura
-    pass
+
+def pass_generator():
+    alfabet = string.ascii_letters + string.digits
+    password = "" .join(secrets.choice(alfabet) for char in range(40))
+    return password
