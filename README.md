@@ -1,7 +1,3 @@
-Claro, aquí tienes una versión mejorada del archivo `README.md` para el proyecto del Gestor de Contraseñas. He añadido detalles sobre el propósito de cada archivo, instrucciones de uso y cómo contribuir al proyecto.
-
----
-
 # Gestor de Contraseñas
 
 Un gestor de contraseñas seguro que permite almacenar, recuperar, generar, cifrar y descifrar contraseñas. Además, incluye un sistema de autenticación para garantizar que solo los usuarios autorizados puedan acceder a sus contraseñas.
