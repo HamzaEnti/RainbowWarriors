@@ -1,1 +1,3 @@
-aquì s'haurien d'emmagatzemar les contrasenyes i usuaris per loginar-se adins de l'aplicatiu. user|password
+#aquì s'haurien d'emmagatzemar les contrasenyes i usuaris per loginar-se adins de l'aplicatiu. user|password
+admin | 1234
+user | password
