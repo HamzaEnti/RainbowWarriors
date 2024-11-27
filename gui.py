@@ -10,9 +10,21 @@ def display_ui():
         password = password_entry.get()
         
         if login(username, password):
-            login_status.config(text="Login exitoso", fg="green")
+            show_password_manager()
         else:
             login_status.config(text="Usuario o contraseña incorrectos", fg="red")
+
+    def show_password_manager():
+        """
+        Cambia a la ventana del gestor de contraseñas.
+        """
+        # Eliminar todos los widgets de la ventana actual
+        for widget in root.winfo_children():
+            widget.destroy()
+
+        # Cambiar el fondo a blanco (pantalla en blanco)
+        root.config(bg="white")
+        root.title("Gestor de Contraseñas")
 
     # Ventana principal
     root = tk.Tk()
@@ -21,13 +33,13 @@ def display_ui():
     root.config(bg="#f5f5f5")
     root.iconbitmap("myIcon.ico")
 
-
+    # Cargar logo
     logo = tk.PhotoImage(file="logo.png")
-    logo = logo.subsample(4, 4)  # Redimensiona el logo (reduce el tamaño)
-
+    logo = logo.subsample(4, 4)  # Redimensiona el logo
     logo_label = tk.Label(root, image=logo, bg="#f5f5f5")
     logo_label.image = logo  # Mantener referencia
     logo_label.pack(pady=10)
+
     # Widgets de login
     tk.Label(root, text="Username:", font=("Arial", 12), bg="#f5f5f5").pack(pady=5)
     username_entry = tk.Entry(root, font=("Arial", 12), width=25)
@@ -44,5 +56,6 @@ def display_ui():
     login_status.pack(pady=5)
 
     root.mainloop()
+
 
 display_ui()
