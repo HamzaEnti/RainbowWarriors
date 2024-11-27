@@ -10,9 +10,9 @@ def pass_storage():
     if not (0 <= KEY <= 255):
         print("La clave debe estar entre 0 y 255.")
         return
-    SERVEI = servei()
-    USUARI = usuari()
-    GENERATEDPASSWORD = pass_generator2()
+    SERVEI = servei().strip() 
+    USUARI = usuari().strip()  
+    GENERATEDPASSWORD = pass_generator2().strip()
     ENCRYPTED_USER = xor_encrypt_decrypt(USUARI, KEY)
     ENCRYPTED_PASSWORD = xor_encrypt_decrypt(GENERATEDPASSWORD, KEY)
     ENCRYPTED_SERVEI = xor_encrypt_decrypt(SERVEI, KEY)
