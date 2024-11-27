@@ -17,10 +17,17 @@ def display_ui():
     # Ventana principal
     root = tk.Tk()
     root.title("RainbowWarriors - Login")
-    root.geometry("450x300")
+    root.geometry("450x400")
     root.config(bg="#f5f5f5")
     root.iconbitmap("myIcon.ico")
 
+
+    logo = tk.PhotoImage(file="logo.png")
+    logo = logo.subsample(4, 4)  # Redimensiona el logo (reduce el tamaño)
+
+    logo_label = tk.Label(root, image=logo, bg="#f5f5f5")
+    logo_label.image = logo  # Mantener referencia
+    logo_label.pack(pady=10)
     # Widgets de login
     tk.Label(root, text="Username:", font=("Arial", 12), bg="#f5f5f5").pack(pady=5)
     username_entry = tk.Entry(root, font=("Arial", 12), width=25)
