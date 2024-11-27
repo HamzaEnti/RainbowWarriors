@@ -2,7 +2,7 @@ def login(username, password): #Aquesta password es la que hem d'utilitzar per e
     """
     Valida las credenciales del usuario desde un archivo de texto.
     """
-    with open("users.txt", "r") as f:
+    with open("authentication.txt", "r") as f:
         for line in f.readlines():
             us, pw = line.strip().split("|")
             if username == us and password == pw:
