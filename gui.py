@@ -11,11 +11,11 @@ def display_ui():
         password = password_entry.get()
         
         if login(username, password):
-            show_password_manager()
+            show_password_manager(username)
         else:
             login_status.config(text="Usuario o contraseña incorrectos", fg="red")
 
-    def show_password_manager():
+    def show_password_manager(username):
         """
         Cambia a la ventana del gestor de contraseñas.
         """
@@ -25,19 +25,22 @@ def display_ui():
 
         # Cambiar el fondo de la ventana y el título
         root.config(bg="white")
-        root.title("RainbowWarriors")
+        root.title("RainbowWarriors - Gestor de Contraseñas")
 
         # Encabezado
         header_frame = tk.Frame(root, bg="white")
         header_frame.pack(fill="x", pady=5)
 
         # Título
-        tk.Label(header_frame, text="RainbowWarriors - Gestor de Contraseñas", font=("Arial", 16, "bold"), bg="white").pack(side="left", padx=10)
+        tk.Label(header_frame, text="RainbowWarriors - Password Manager", font=("Arial", 16, "bold"), bg="white").pack(side="left", padx=10)
 
         # Campo de búsqueda
         search_entry = tk.Entry(header_frame, font=("Arial", 12), width=30)
         search_entry.pack(side="left", padx=10)
         tk.Button(header_frame, text="Search", font=("Arial", 10), bg="#444444", fg="white").pack(side="left", padx=10)
+
+        # Texto para mostrar el usuario
+        tk.Label(header_frame, text=f"Logged in as: {username}", font=("Arial", 10), bg="white").pack(side="left", padx=10)
 
         # Botones
         tk.Button(header_frame, text="new entry", font=("Arial", 10), bg="#444444", fg="white").pack(side="right", padx=10)
@@ -61,6 +64,7 @@ def display_ui():
         table.column("password", width=150)
 
         # Insertar datos de ejemplo
+    
         table.pack(fill="both", expand=True)
 
     def display_login():
@@ -102,8 +106,6 @@ def display_ui():
     root.title("RainbowWarriors - Login")
     root.geometry("1200x600")  # Ventana más rectangular
     root.config(bg="#f5f5f5")
-    root.iconbitmap("myIcon.ico")
-
 
     # Cargar logo
     logo = tk.PhotoImage(file="logo.png")
@@ -118,7 +120,6 @@ def display_ui():
     display_login()
 
     root.mainloop()
-
 
 display_ui()
 
