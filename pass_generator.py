@@ -5,6 +5,9 @@ import string
 
 
 def pass_generator():
+    num = int(input("Length:"))
     alfabet = string.ascii_letters + string.digits
-    password = "" .join(secrets.choice(alfabet) for char in range(40))
-    return password
+    password = "" .join(secrets.choice(alfabet) for char in range(num))
+    return print(password)
+
+pass_generator()
