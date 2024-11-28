@@ -1,15 +1,13 @@
-from pass_generator import pass_generator2 
-from general_storage import usuari
-from general_storage import servei
+from pass_generator import pass_generator2
+from general_storage import usuari, servei
+
 
 def xor_encrypt_decrypt(input_string, KEY):
     return ''.join(chr(ord(char) ^ KEY) for char in input_string) #Cifra o descifra una cadena usando XOR con una clave.
 
+
 def pass_storage():
-    KEY = int(input("Crear clave de acceso (0-255): "))  # Asegúrate de que la clave esté en el rango adecuado.
-    if not (0 <= KEY <= 255):
-        print("La clave debe estar entre 0 y 255.")
-        return
+    KEY = 1
     SERVEI = servei().strip() 
     USUARI = usuari().strip()  
     GENERATEDPASSWORD = pass_generator2().strip()
