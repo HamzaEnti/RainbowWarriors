@@ -3,11 +3,7 @@ def xor_encrypt_decrypt(input_string, KEY):
     return ''.join(chr(ord(char) ^ KEY) for char in input_string)
 
 def decrypt_storage():
-    KEY = int(input("Introduce la clave de acceso (0-255): "))  # Asegúrate de que la clave esté en el rango adecuado.
-    if not (0 <= KEY <= 255):
-        print("La clave debe estar entre 0 y 255.")
-        return
-
+    KEY = int(input("Introduce la clave de acceso: "))
     try:
         with open("storage.txt", 'r') as archivo:
             for line in archivo:
