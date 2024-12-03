@@ -13,6 +13,9 @@ def register(username, password):
     """
     Registra un nuevo usuario almacenando sus credenciales en texto plano.
     """
+    if len(password) > 16:
+        print("La contraseña no puede tener más de 16 caracteres.")
+        return
     with open("authentication.txt", "a") as f:
         f.write(f"{username}|{password}\n")
     print(f"Usuario '{username}' registrado exitosamente.")
