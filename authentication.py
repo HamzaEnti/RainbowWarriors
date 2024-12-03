@@ -11,13 +11,13 @@ def login(username, password): #Aquesta password es la que hem d'utilitzar per e
 
 def register(username, password):
     """
-    Registra un nuevo usuario almacenando sus credenciales de manera segura.
+    Registra un nuevo usuario almacenando sus credenciales en texto plano.
     """
-        with open("authentication.txt", "a") as f:
-            f.write(f"{username}|{password}\n")
-        print(f"Usuario '{username}' registrado exitosamente.")
-    except Exception as e:
-        print(f"Error al registrar el usuario: {e}")
+    with open("authentication.txt", "a") as f:
+        f.write(f"{username}|{password}\n")
+    print(f"Usuario '{username}' registrado exitosamente.")
+
+
 
 """
 Per garantir la seguretat de les nostres bases de dades, hem de mantenir les dades dels usuaris encriptades, 
