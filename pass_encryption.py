@@ -9,7 +9,7 @@ def install_pycryptodome():
         print("La biblioteca 'pycryptodome' no está instalada. Procediendo con la instalación...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pycryptodome"])
         print("Instalación completada. Reinicia el programa si encuentras algún problema.")
-
+install_pycryptodome()
 from pass_generator import pass_generator2
 from general_storage import usuari, servei
 from Crypto.Cipher import AES
