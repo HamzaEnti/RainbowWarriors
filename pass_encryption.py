@@ -12,7 +12,7 @@ def install_pycryptodome():
 install_pycryptodome()
 
 from pass_generator import pass_generator2
-from general_storage import usuari, servei
+from inside_storage import usuari, servei
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 import base64
