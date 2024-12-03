@@ -1,6 +1,9 @@
 # pass_storage.py
+import passwod from pass_encryption
 def store_password(name, password):
-    # Almacenar la contraseña de forma segura
+     with open("storage.txt", 'a') as archivo:
+        # Guardar salt y datos cifrados en una sola línea
+        archivo.write(f"{base64.b64encode(salt).decode('utf-8')},{ENCRYPTED_SERVEI},{ENCRYPTED_USER},{ENCRYPTED_PASSWORD}\n")
     pass
 def get_passwords():
     # Obtener todas las contraseñas almacenadas
