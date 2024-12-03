@@ -8,6 +8,17 @@ def login(username, password): #Aquesta password es la que hem d'utilitzar per e
             if username == us and password == pw:
                 return True
     return False
+
+def register(username, password):
+    """
+    Registra un nuevo usuario almacenando sus credenciales de manera segura.
+    """
+        with open("authentication.txt", "a") as f:
+            f.write(f"{username}|{password}\n")
+        print(f"Usuario '{username}' registrado exitosamente.")
+    except Exception as e:
+        print(f"Error al registrar el usuario: {e}")
+
 """
 Per garantir la seguretat de les nostres bases de dades, hem de mantenir les dades dels usuaris encriptades, 
 de manera que ni nosaltres puguem accedir-hi directament. Tot i això, els usuaris han de poder visualitzar les 
