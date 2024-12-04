@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from authentication import login, register
+from authentication import registrar_usuario, verificar_contraseña
 
 def display_ui():
     """
@@ -10,7 +10,11 @@ def display_ui():
         username = username_entry.get()
         password = password_entry.get()
         
-        if login(username, password):
+        if not username or not password:
+            login_status.config(text="Por favor ingresa usuario y contraseña", fg="red")
+            return
+        
+        if verificar_contraseña('contraseñas.json', username, password):
             show_password_manager(username)
         else:
             login_status.config(text="Usuario o contraseña incorrectos", fg="red")
@@ -99,7 +103,7 @@ def display_ui():
                 registration_status.config(text="Por favor, completa todos los campos.", fg="red")
                 return
 
-            register(username, password)
+            registrar_usuario('contraseñas.json', username, password)
             registration_status.config(text="Usuario registrado con éxito", fg="green")
             display_login()
 
@@ -122,15 +126,12 @@ def display_ui():
         confirm_password_entry = tk.Entry(root, show="*", font=("Arial", 12), width=25)
         confirm_password_entry.pack(pady=5)
 
-        register_button = tk.Button(root, text="Registrar", font=("Arial", 12), bg="#444444", fg="white", command=handle_registration)
+        register_button = tk.Button(root, text="Registrar", font=("Arial", 12), bg="#444444", fg="white", width=15, command=handle_registration)
         register_button.pack(pady=20)
 
-        registration_status = tk.Label(root, text="", font=("Arial", 10))
+        registration_status = tk.Label(root, text="", font=("Arial", 10), bg="#f5f5f5")
         registration_status.pack(pady=5)
-
-        back_to_login_button = tk.Button(root, text="Volver al Login", font=("Arial", 12), bg="#FF5733", fg="white", command=display_login)
-        back_to_login_button.pack(pady=10)
-
+        
     root = tk.Tk()
     root.title("RainbowWarriors - Login")
     root.geometry("1200x600")
@@ -144,4 +145,3 @@ def display_ui():
     root.mainloop()
 
 display_ui()
-
