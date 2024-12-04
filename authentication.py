@@ -1,25 +1,57 @@
-def login(username, password): #Aquesta password es la que hem d'utilitzar per encriptar i desencriptar la resta de dades, es la clau.
+import hashlib
+import json
+
+def encriptar_contraseña(contrasena):
     """
-    Valida las credenciales del usuario desde un archivo de texto.
+    Encripta la contraseña utilizando SHA-256.
     """
-    with open("authentication.txt", "r") as f:
-        for line in f.readlines():
-            us, pw = line.strip().split("|")
-            if username == us and password == pw:
-                return True
+    sha256 = hashlib.sha256()
+    sha256.update(contrasena.encode('utf-8'))
+    return sha256.hexdigest()
+
+def verificar_contraseña(archivo, usuario, contrasena_ingresada):
+    """
+    Verifica si la contraseña ingresada coincide con la almacenada en el archivo JSON.
+    """
+    try:
+        with open(archivo, 'r') as file:
+            contraseñas = json.load(file)
+    except FileNotFoundError:
+        print("El archivo de contraseñas no existe.")
+        return False
+
+    if usuario in contraseñas:
+        hash_guardado = contraseñas[usuario]
+        if encriptar_contraseña(contrasena_ingresada) == hash_guardado:
+            return True
     return False
 
-def register(username, password):
+def guardar_contraseña(archivo, usuario, contrasena):
     """
-    Registra un nuevo usuario almacenando sus credenciales en texto plano.
+    Guarda una nueva contraseña encriptada en el archivo JSON.
     """
-    if len(password) > 16:
-        print("La contraseña no puede tener más de 16 caracteres.")
-        return
-    with open("authentication.txt", "a") as f:
-        f.write(f"{username}|{password}\n")
-    print(f"Usuario '{username}' registrado exitosamente.")
+    hash_contrasena = encriptar_contraseña(contrasena)
+    
+    try:
+        with open(archivo, 'r') as file:
+            contraseñas = json.load(file)
+    except FileNotFoundError:
+        contraseñas = {}
 
+    contraseñas[usuario] = hash_contrasena
+    
+    with open(archivo, 'w') as file:
+        json.dump(contraseñas, file, indent=4)
+    
+    print(f"Contraseña para '{usuario}' guardada exitosamente.")
+
+def registrar_usuario(archivo, usuario, contrasena):
+    """
+    Registra un nuevo usuario guardando su contraseña encriptada.
+    """
+    guardar_contraseña(archivo, usuario, contrasena)
+    print(f"Usuario '{usuario}' registrado exitosamente.")
+    
 
 
 """
