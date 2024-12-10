@@ -3,6 +3,7 @@ from pass_generator import pass_generator2
 from Crypto.Protocol.KDF import PBKDF2
 import os
 import base64
+from pass_decypt import aes_decrypt
 
 
 def get_passwords():
@@ -47,3 +48,39 @@ def pass_storage(): #emmagatzemar la contrasenya
         archivo.write(f"{base64.b64encode(salt).decode('utf-8')},{ENCRYPTED_SERVEI},{ENCRYPTED_USER},{ENCRYPTED_PASSWORD}\n") # crea el arxiu storage per guardar el usuari servei i contrasenya emmagatzemats.
 
 pass_storage()
+
+def decrypt_storage(): # Això demana la contrasenya key que cada ususari tindra i no ha d'oblidar per desencriptar i encriptar.
+    password = input("Introduce tu contraseña para descifrar los datos: ").strip()
+    
+    try:
+        with open("storage.txt", 'r') as archivo:
+            for line in archivo:
+                # Separar los componentes de cada línea
+                parts = line.strip().split(",")
+                salt = base64.b64decode(parts[0])  # Decodificar el salt
+                ENCRYPTED_SERVEI = parts[1]
+                ENCRYPTED_USER = parts[2]
+                ENCRYPTED_PASSWORD = parts[3]
+
+                # Derivar la clave con el salt
+                key = PBKDF2(password, salt, dkLen=16, count=100000)
+
+                try:
+                    # Intentar desencriptar
+                    DECRYPTED_SERVEI = aes_decrypt(ENCRYPTED_SERVEI, key)
+                    DECRYPTED_USER = aes_decrypt(ENCRYPTED_USER, key)
+                    DECRYPTED_PASSWORD = aes_decrypt(ENCRYPTED_PASSWORD, key)
+
+                    # Mostrar el registro desencriptado
+                    print(f"Servei: {DECRYPTED_SERVEI}, Usuari: {DECRYPTED_USER}, Contrasenya: {DECRYPTED_PASSWORD}")
+                except Exception:
+                    # Si falla, la contraseña no corresponde a este registro
+                    print("Contraseña incorrecta para este registro.")
+
+    except FileNotFoundError:
+        print("El archivo 'storage.txt' no se encontró.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+
+if __name__ == "__main__":
+    decrypt_storage()
