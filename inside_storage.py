@@ -8,8 +8,7 @@ from pass_decypt import aes_decrypt
 
 def get_passwords():
     GENERATEDPASSWORD = pass_generator2()
-   
-get_passwords()
+    return GENERATEDPASSWORD
 
 
 def edit_password(name, new_password):
@@ -37,10 +36,10 @@ def pass_storage(): #emmagatzemar la contrasenya
 
     SERVEI = servei().strip()
     USUARI = usuari().strip()
-    GENERATEDPASSWORD = pass_generator2().strip()
+    GNPASS = get_passwords().strip()
 
     ENCRYPTED_USER = aes_encrypt(USUARI, key) #encripta l'usuari
-    ENCRYPTED_PASSWORD = aes_encrypt(GENERATEDPASSWORD, key) #encripta la contrasenya
+    ENCRYPTED_PASSWORD = aes_encrypt(GNPASS, key) #encripta la contrasenya
     ENCRYPTED_SERVEI = aes_encrypt(SERVEI, key) #encripta el servei
 
     with open("storage.txt", 'a') as archivo:
