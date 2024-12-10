@@ -3,7 +3,7 @@ from pass_generator import pass_generator2
 from Crypto.Protocol.KDF import PBKDF2
 import os
 import base64
-from pass_decypt import aes_decrypt
+from pass_decrypt import aes_decrypt
 
 
 def get_passwords():
