@@ -1,9 +1,11 @@
 from pass_encryption import aes_encrypt
 from pass_generator import pass_generator2
 from Crypto.Protocol.KDF import PBKDF2
+from pass_decrypt import aes_decrypt
 import os
 import base64
-from pass_decrypt import aes_decrypt
+import json
+
 
 
 def get_passwords():
@@ -11,12 +13,56 @@ def get_passwords():
     return GENERATEDPASSWORD
 
 
-def edit_password(name, new_password):
+def edit_password(NomServei, new_password):
     # Editar una contraseña almacenada
+    password = input("Introduce la contraseña para cifrar los datos: ").strip()
+    salt = os.urandom(16)  # Generar un salt únic
+    key = PBKDF2(password, salt, dkLen=16, count=100000)  # Derivar la clau
+
+    try:
+        with open("storage.json", 'r') as json_file:
+            storage_data = json.load(json_file)
+
+        for entry in storage_data:
+            if entry["service"] == NomServei:
+                new_encrypted_password = aes_encrypt(new_password, key) # Actualitzar la contrasenya
+                entry["password"] = new_encrypted_password
+                entry["salt"] = base64.b64encode(salt).decode('utf-8')  # Actualitzar el salt
+                break
+        else:
+            print("Servicio no encontrado.")
+
+        
+        with open("storage.json", 'w') as json_file: # Escriure la informació nova de nou al Json
+            json.dump(storage_data, json_file, indent=4)
+
+    except FileNotFoundError:
+        print("El archivo 'storage.json' no se encontró.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
     pass
-def delete_password(name):
-    # Eliminar una contraseña almacenada
-    pass
+    
+def delete_password(NomServei):
+    try:
+        with open("storage.json", 'r') as json_file:
+            storage_data = json.load(json_file)
+
+       
+        new_storage_data = [entry for entry in storage_data if entry["service"] != NomServei]  # filtrar el que s'ah d'eliminar
+
+        if len(new_storage_data) == len(storage_data):
+            print("Servicio no encontrado.")
+        else:
+            print(f"Servicio '{NomServei}' eliminado.")
+
+        
+        with open("storage.json", 'w') as json_file: # escriure les noves dades
+            json.dump(new_storage_data, json_file, indent=4)
+
+    except FileNotFoundError:
+        print("El archivo 'storage.json' no se encontró.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
 
 def usuari():#Això pregunta el nom que el usuari utilitza a les diferents plataformes de les que ha de guardar les contrasenyes i usuaris.
     USUARI = str(input("Usuari: "))
@@ -42,9 +88,26 @@ def pass_storage(): #emmagatzemar la contrasenya
     ENCRYPTED_PASSWORD = aes_encrypt(GNPASS, key) #encripta la contrasenya
     ENCRYPTED_SERVEI = aes_encrypt(SERVEI, key) #encripta el servei
 
-    with open("storage.txt", 'a') as archivo:
-        # Guardar salt y datos cifrados en una sola línea
-        archivo.write(f"{base64.b64encode(salt).decode('utf-8')},{ENCRYPTED_SERVEI},{ENCRYPTED_USER},{ENCRYPTED_PASSWORD}\n") # crea el arxiu storage per guardar el usuari servei i contrasenya emmagatzemats.
+    #Per fer un json hem de preparar les dades que vole emmagatzemar.
+    DADES = {
+        "salt": base64.b64encode(salt).decode('utf-8'),
+        "service": ENCRYPTED_SERVEI,
+        "user": ENCRYPTED_USER,
+        "password": ENCRYPTED_PASSWORD
+    }
+    # Això passa per el json si ja esta creat o crea un en cs de que no estigui creat.
+     try:
+        with open("storage.json", 'r') as json_file:
+            storage_data = json.load(json_file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        storage_data = []
+
+    # incloeix la nova infromació
+    storage_data.append(data)
+
+    # escriu la nova informació al json
+    with open("storage.json", 'w') as json_file:
+        json.dump(storage_data, json_file, indent=4)  # perque es vegui millor, es estetic
 
 pass_storage()
 
@@ -52,11 +115,12 @@ def decrypt_storage(): # Això demana la contrasenya key que cada ususari tindra
     password = input("Introduce tu contraseña para descifrar los datos: ").strip()
     
     try:
-        with open("storage.txt", 'r') as archivo:
-            for line in archivo:
+         with open("storage.json", 'r') as json_file:
+            storage_data = json.load(json_file)
+
+            for entry in storage_data:
                 # Separar los componentes de cada línea
-                parts = line.strip().split(",")
-                salt = base64.b64decode(parts[0])  # Decodificar el salt
+                salt = base64.b64decode(entry["salt"])   # Decodificar el salt
                 ENCRYPTED_SERVEI = parts[1]
                 ENCRYPTED_USER = parts[2]
                 ENCRYPTED_PASSWORD = parts[3]
@@ -77,7 +141,7 @@ def decrypt_storage(): # Això demana la contrasenya key que cada ususari tindra
                     print("Contraseña incorrecta para este registro.")
 
     except FileNotFoundError:
-        print("El archivo 'storage.txt' no se encontró.")
+        print("El archivo 'storage.json' no se encontró.")
     except Exception as e:
         print(f"Ocurrió un error: {e}")
 
