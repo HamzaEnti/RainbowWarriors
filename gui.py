@@ -45,7 +45,7 @@ def display_ui():
 
         columns = ("service", "username", "password")
         table = ttk.Treeview(table_frame, columns=columns, show="headings", height=10)
-        table.heading("service", text="service")
+        table.heading("service", text="Service")
         table.heading("username", text="Username")
         table.heading("password", text="Password")
         table.column("service", width=150)
