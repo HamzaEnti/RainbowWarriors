@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from authentication import registrar_usuario, verificar_contraseña
-from pathlib import Path
-
 
 def display_ui():
     """
@@ -47,7 +45,7 @@ def display_ui():
 
         columns = ("service", "username", "password")
         table = ttk.Treeview(table_frame, columns=columns, show="headings", height=10)
-        table.heading("service", text="Service")
+        table.heading("service", text="service")
         table.heading("username", text="Username")
         table.heading("password", text="Password")
         table.column("service", width=150)
@@ -133,15 +131,7 @@ def display_ui():
 
         registration_status = tk.Label(root, text="", font=("Arial", 10), bg="#f5f5f5")
         registration_status.pack(pady=5)
-
-    # Ruta base automática
-    BASE_DIR = Path(__file__).parent
-
-    # Rutas de los archivos
-    LOGO_PATH = BASE_DIR / "logo.png"
-    ICON_PATH = BASE_DIR / "myIcon.ico"
- 
-
+        
     root = tk.Tk()
     root.title("RainbowWarriors - Login")
     root.geometry("1200x600")
