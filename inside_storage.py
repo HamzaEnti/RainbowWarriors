@@ -96,7 +96,7 @@ def pass_storage(): #emmagatzemar la contrasenya
         "password": ENCRYPTED_PASSWORD
     }
     # Això passa per el json si ja esta creat o crea un en cs de que no estigui creat.
-     try:
+    try:
         with open("storage.json", 'r') as json_file:
             storage_data = json.load(json_file)
     except (FileNotFoundError, json.JSONDecodeError):
