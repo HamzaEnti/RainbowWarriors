@@ -1,3 +1,16 @@
+import subprocess
+import sys
+
+# Comprobar e instalar pycryptodome si no esta instalado.(biblioteca de Python diseñada para realizar operaciones criptográficas)
+def install_pycryptodome():
+    try:
+        import Crypto
+    except ImportError:
+        print("La biblioteca 'pycryptodome' no está instalada. Procediendo con la instalación...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "pycryptodome"])
+        print("Instalación completada. Reinicia el programa si encuentras algún problema.")
+install_pycryptodome()
+
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 import base64
