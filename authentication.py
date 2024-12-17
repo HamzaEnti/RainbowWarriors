@@ -1,6 +1,8 @@
 import hashlib
 import json
 
+#prova
+
 def encriptar_contraseña(contrasena):
     """
     Encripta la contraseña utilizando SHA-256.
