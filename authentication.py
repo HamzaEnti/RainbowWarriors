@@ -3,8 +3,6 @@ import json
 
 #prova123
 
-#holaholahola
-
 def encriptar_contraseña(contrasena):
     """
     Encripta la contraseña utilizando SHA-256.
