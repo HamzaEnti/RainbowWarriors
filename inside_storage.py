@@ -14,43 +14,6 @@ def get_passwords():
 
 
 def edit_password(service_name):
-    password = input("Introduce la contraseña maestra para editar los datos: ").strip()
-    try:
-        with open("storage.json", 'r') as json_file:
-            storage_data = json.load(json_file)
-
-        updated = False
-        for entry in storage_data:
-            salt = base64.b64decode(entry["salt"])
-            key = PBKDF2(password, salt, dkLen=16, count=100000)
-
-            try:
-                DECRYPTED_SERVEI = aes_decrypt(entry["service"], key)
-                if DECRYPTED_SERVEI == service_name:
-                    # Generar nueva contraseña
-                    new_password = get_passwords()
-                    ENCRYPTED_NEW_PASSWORD = aes_encrypt(new_password, key)
-
-                    # Actualizar la entrada con la nueva contraseña
-                    entry["password"] = ENCRYPTED_NEW_PASSWORD
-                    updated = True
-
-                    print(f"Nueva contraseña generada automáticamente para '{service_name}': {new_password}")
-                    break
-            except Exception as e:
-                print(f"Error al descifrar el servicio: {e}")
-
-        if updated:
-            with open("storage.json", 'w') as json_file:
-                json.dump(storage_data, json_file, indent=4)
-            print(f"Contraseña para el servicio '{service_name}' editada correctamente.")
-        else:
-            print(f"No se encontró el servicio '{service_name}' o la contraseña maestra no coincide.")
-
-    except FileNotFoundError:
-        print("El archivo 'storage.json' no se encontró.")
-    except Exception as e:
-        print(f"Ocurrió un error: {e}")
 
 def delete_password(service_name):
     password = input("Introduce la contraseña maestra para eliminar los datos: ").strip()
