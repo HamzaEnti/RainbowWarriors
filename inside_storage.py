@@ -6,7 +6,7 @@ import os
 import base64
 import json
 
-#aaaaaaaaa
+#aa
 
 def get_passwords():
     GENERATEDPASSWORD = pass_generator2()
