@@ -9,12 +9,49 @@ import json
 
 
 def get_passwords():
-    GENERATEDPASSWORD = pass_generator2()
-    return GENERATEDPASSWORD
+    return pass_generator2
 
 
 def edit_password(service_name):
+    password = input("Introduce la contraseña maestra para editar los datos: ").strip()
+    try:
+            with open("storage.json", 'r') as json_file:
+                storage_data = json.load(json_file)
 
+            updated = False
+            for entry in storage_data:
+                salt = base64.b64decode(entry["salt"])
+                key = PBKDF2(password, salt, dkLen=16, count=100000)
+
+                try:
+                    DECRYPTED_SERVEI = aes_decrypt(entry["service"], key)
+                    if DECRYPTED_SERVEI == service_name:
+                        # Generar nueva contraseña
+                        new_password = pass_generator2()
+                        ENCRYPTED_NEW_PASSWORD = aes_encrypt(new_password, key)
+
+                        # Actualizar la entrada con la nueva contraseña
+                        entry["password"] = ENCRYPTED_NEW_PASSWORD
+                        updated = True
+
+                        print(f"Nueva contraseña generada automáticamente para '{service_name}': {new_password}")
+                        break
+                except Exception as e:
+                    print(f"Error al descifrar el servicio: {e}")
+
+            if updated:
+                with open("storage.json", 'w') as json_file:
+                    json.dump(storage_data, json_file, indent=4)
+                print(f"Contraseña para el servicio '{service_name}' editada correctamente.")
+            else:
+                print(f"No se encontró el servicio '{service_name}' o la contraseña maestra no coincide.")
+
+    except FileNotFoundError:
+        print("El archivo 'storage.json' no se encontró.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+
+        
 def delete_password(service_name):
     password = input("Introduce la contraseña maestra para eliminar los datos: ").strip()
     try:
@@ -59,13 +96,13 @@ def servei():#Això pregunta el servei del que el usuari vol guartdar la contras
     return SERVEI #Aquesta variable no espot canviar. S'ha d'encriptar.
 
 def pass_storage():
-    password = input("Introduce una contraseña para cifrar los datos: ").strip()
+    password = input("Introduce la contraseña maestra para cifrar los datos: ").strip()
     salt = os.urandom(16)
     key = PBKDF2(password, salt, dkLen=16, count=100000)
 
     SERVEI = servei().strip()
     USUARI = usuari().strip()
-    GNPASS = get_passwords().strip()
+    GNPASS = pass_generator2().strip()
 
     ENCRYPTED_USER = aes_encrypt(USUARI, key)
     ENCRYPTED_PASSWORD = aes_encrypt(GNPASS, key)
@@ -92,7 +129,7 @@ def pass_storage():
 
 
 def decrypt_storage():
-    password = input("Introduce tu contraseña maestra para descifrar los datos: ").strip()
+    password = input("Introduce tu contraseña maestra para descifrar los datos: \n").strip()
 
     try:
         with open("storage.json", 'r') as json_file:
@@ -107,7 +144,7 @@ def decrypt_storage():
                 DECRYPTED_USER = aes_decrypt(entry["user"], key)
                 DECRYPTED_PASSWORD = aes_decrypt(entry["password"], key)
 
-                print(f"Servei: {DECRYPTED_SERVEI}, Usuari: {DECRYPTED_USER}, Contrasenya: {DECRYPTED_PASSWORD}")
+                print(f"Servei: {DECRYPTED_SERVEI}, Usuari: {DECRYPTED_USER}, Contrasenya: {DECRYPTED_PASSWORD}\n")
             except Exception:
                 print("Contraseña maestra incorrecta para este registro.")
 
@@ -132,8 +169,7 @@ if __name__ == "__main__":
             pass_storage()
         elif opcion == "2":
             NomServei = input("Introduce el nombre del servicio a editar: ").strip()
-            new_password = input("Introduce la nueva contraseña: ").strip()
-            edit_password(NomServei, new_password)
+            edit_password(NomServei)
         elif opcion == "3":
             NomServei = input("Introduce el nombre del servicio a eliminar: ").strip()
             delete_password(NomServei)
