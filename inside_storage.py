@@ -122,8 +122,15 @@ def pass_storage(service, user, password, master_password):
 
     try:
         with open("storage.json", "r") as file:
-            storage_data = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
+            try:
+                storage_data = json.load(file)
+                if not isinstance(storage_data, list):
+                    raise ValueError("El archivo JSON no contiene una lista válida.")
+            except json.JSONDecodeError:
+                # Si el archivo está vacío o mal formateado, inicializamos una lista
+                storage_data = []
+    except FileNotFoundError:
+        # Si el archivo no existe, inicializamos una lista vacía
         storage_data = []
 
     storage_data.append(new_entry)
