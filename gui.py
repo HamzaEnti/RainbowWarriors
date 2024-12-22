@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from authentication import registrar_usuario, verificar_contraseña
+from PIL import Image, ImageTk
 import inside_storage
+
+
 
 def display_ui():
     """
@@ -153,7 +156,18 @@ def display_ui():
             widget.destroy()
 
         root.title("RainbowWarriors - Login")
+        root.geometry("1200x600")  # Tamaño exacto de la ventana principal
         root.config(bg="#f5f5f5")
+
+
+        root.iconbitmap("myIcon.ico")
+        logo_image = Image.open("logo.png")
+        logo_image = logo_image.resize((150, 150))  # Ajusta el tamaño (ancho, alto) según tus necesidades
+        logo_image = ImageTk.PhotoImage(logo_image)
+        logo_label = tk.Label(root, image=logo_image)
+        logo_label.image = logo_image
+        logo_label.pack(pady=20)
+
 
         tk.Label(root, text="Username:", font=("Arial", 12), bg="#f5f5f5").pack(pady=5)
         nonlocal username_entry, password_entry
