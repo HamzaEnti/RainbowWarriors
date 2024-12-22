@@ -114,26 +114,36 @@ def display_ui():
             messagebox.showerror("Error", f"No se pudo actualizar la tabla: {e}")
 
     def show_password_manager(username):
+
+        global master_password_entry
+
+
         for widget in root.winfo_children():
             widget.destroy()
 
         root.title("RainbowWarriors - Gestor de Contraseñas")
 
-        header_frame = tk.Frame(root, bg="white")
+        header_frame = tk.Frame(root, bg="#f5f5f5")
         header_frame.pack(fill="x", pady=5)
 
-        tk.Label(header_frame, text="RainbowWarriors - Password Manager", font=("Arial", 16, "bold"), bg="white").pack(side="left", padx=10)
-        tk.Label(header_frame, text=f"Logged in as: {username}", font=("Arial", 10), bg="white").pack(side="right", padx=10)
+        tk.Label(header_frame, text="RainbowWarriors - Password Manager", font=("Arial", 16, "bold"), bg="#f5f5f5").pack(side="left", padx=10)
+        tk.Label(header_frame, text=f"Logged in as: {username}", font=("Arial", 10), bg="#f5f5f5").pack(side="right", padx=10)
 
-        tk.Label(root, text="Contraseña Maestra:", font=("Arial", 12)).pack(pady=5)
-        global master_password_entry
-        master_password_entry = tk.Entry(root, show="*", font=("Arial", 12), width=25)
-        master_password_entry.pack(pady=5)
+        master_password_frame = tk.Frame(root, bg="#f5f5f5")
+        master_password_frame.pack(pady=20)
+        
+        tk.Label(master_password_frame, text="Contraseña Maestra:", font=("Arial", 14), bg="#f5f5f5").pack(side="left", padx=10)
+        master_password_entry = tk.Entry(master_password_frame, show="*", font=("Arial", 12), width=30)
+        master_password_entry.pack(side="left", padx=10)
+
+        tk.Button(master_password_frame, text="Actualizar", font=("Arial", 10), bg="#444444", fg="white", command=update_password_table).pack(side="left", padx=10)
+
+
 
         tk.Button(header_frame, text="Nueva Entrada", font=("Arial", 10), bg="#444444", fg="white", command=new_entry_window).pack(side="right", padx=10)
         tk.Button(header_frame, text="Logout", font=("Arial", 10), bg="#FF5733", fg="white", command=display_login).pack(side="right", padx=10)
 
-        table_frame = tk.Frame(root, bg="white")
+        table_frame = tk.Frame(root, bg="#f5f5f5")
         table_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
         columns = ("service", "username", "password")
@@ -146,8 +156,6 @@ def display_ui():
         table.column("username", width=150)
         table.column("password", width=150)
         table.pack(fill="both", expand=True)
-
-        tk.Button(root, text="Actualizar Tabla", command=update_password_table).pack(pady=5)
 
 
     def display_login():
