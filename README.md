@@ -1,6 +1,22 @@
 # RainbowWarriors 🌈
 
-RainbowWarriors és una eina senzilla i eficient per gestionar contrasenyes segures, protegint la informació personal dels usuaris mitjançant encriptació avançada i una interfície gràfica intuïtiva.
+## Descripció general
+Rainbow Warriors és un gestor de contrasenyes segur i fàcil d’utilitzar dissenyat per ajudar els usuaris a generar, emmagatzemar i gestionar contrasenyes fortes. Ofereix funcions de xifrat, desxifrat i una interfície gràfica d’usuari (GUI) per a una interacció intuïtiva.
+
+## Característiques
+- **Generació de contrasenyes**: Crea contrasenyes segures i aleatòries.
+- **Emmagatzematge segur**: Xifra i guarda les contrasenyes utilitzant mètodes criptogràfics moderns.
+- **Recuperació de contrasenyes**: Desxifra i recupera les contrasenyes guardades quan sigui necessari.
+- **Interfície gràfica fàcil d’utilitzar**: Una interfície senzilla basada en Tkinter i Pillow.
+
+## Estructura dels fitxers
+- `authentication.py`: Gestió de la lògica d’autenticació d’usuaris.
+- `gui.py`: Gestió de la interfície gràfica d’usuari.
+- `inside_storage.py`: Proporciona emmagatzematge segur i gestió de contrasenyes.
+- `pass_decrypt.py`: Implementa la lògica per desxifrar contrasenyes.
+- `pass_encryption.py`: Gestió del xifrat de contrasenyes.
+- `pass_generator.py`: Generació de contrasenyes segures.
+- `pass_manager.py`: Coordina les funcionalitats principals del gestor de contrasenyes.
 
 ## Funcionalitats principals
 - **Generació de contrasenyes segures**: Genera contrasenyes complexes i úniques.
@@ -31,29 +47,6 @@ Segueix aquests passos per instal·lar i executar l'aplicació:
    ```bash
    python pass_manager.py
    ```
-
-## Ús
-- Inicia l'aplicació i segueix els passos de la GUI per generar i gestionar contrasenyes.
-- Per utilitzar el xifrat i desxifrat manualment:
-   ```bash
-   python pass_encryption.py
-   python pass_decypt.py
-   ```
-
-## Estructura del projecte
-```
-RainbowWarriors/
-│
-├── authentication.py       # Gestió d'autenticació
-├── general_storage.py      # Emmagatzematge d'informació
-├── gui.py                  # Interfície gràfica
-├── pass_generator.py       # Generació de contrasenyes
-├── pass_encryption.py      # Xifrat de dades
-├── pass_decypt.py          # Desxifrat de dades
-├── pass_manager.py         # Gestor principal de contrasenyes
-├── requirements.txt        # Llibreries requerides
-└── README.md               # Documentació del projecte
-```
 
 ## Preguntes freqüents
 **1. L'aplicació guarda les contrasenyes al núvol?**  
