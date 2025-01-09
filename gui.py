@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from authentication import registrar_usuario, verificar_contraseña
-from PIL import Image, ImageTk
 import inside_storage
 
 
@@ -122,6 +121,8 @@ def display_ui():
             widget.destroy()
 
         root.title("RainbowWarriors - Gestor de Contraseñas")
+        root.geometry("900x500")
+
 
         header_frame = tk.Frame(root, bg="#f5f5f5")
         header_frame.pack(fill="x", pady=5)
@@ -141,7 +142,7 @@ def display_ui():
 
 
         tk.Button(header_frame, text="Nueva Entrada", font=("Arial", 10), bg="#444444", fg="white", command=new_entry_window).pack(side="right", padx=10)
-        tk.Button(header_frame, text="Logout", font=("Arial", 10), bg="#FF5733", fg="white", command=display_login).pack(side="right", padx=10)
+        tk.Button(header_frame, text="Logout", font=("Arial", 10), bg="#6f52ed", fg="white", command=display_login).pack(side="right", padx=10)
 
         table_frame = tk.Frame(root, bg="#f5f5f5")
         table_frame.pack(fill="both", expand=True, padx=10, pady=10)
@@ -159,82 +160,155 @@ def display_ui():
 
 
     def display_login():
-        nonlocal login_status
         for widget in root.winfo_children():
             widget.destroy()
 
-        root.title("RainbowWarriors - Login")
-        root.geometry("1200x600")  # Tamaño exacto de la ventana principal
-        root.config(bg="#f5f5f5")
-
-
+        root.title("Inicia la sessió - RainbowWarriors")
+        root.geometry("400x500")
+        root.configure(bg="#f5f5f5")
         root.iconbitmap("myIcon.ico")
-        logo_image = Image.open("logo.png")
-        logo_image = logo_image.resize((150, 150))  # Ajusta el tamaño (ancho, alto) según tus necesidades
-        logo_image = ImageTk.PhotoImage(logo_image)
-        logo_label = tk.Label(root, image=logo_image)
-        logo_label.image = logo_image
-        logo_label.pack(pady=20)
 
+        # Título principal
+        tk.Label(
+            root,
+            text="Inicia la sessió",
+            font=("Arial", 18, "bold"),
+            bg="#f5f5f5",
+            fg="#000000"
+        ).pack(pady=10)
 
-        tk.Label(root, text="Username:", font=("Arial", 12), bg="#f5f5f5").pack(pady=5)
-        nonlocal username_entry, password_entry
-        username_entry = tk.Entry(root, font=("Arial", 12), width=25)
+        tk.Label(
+            root,
+            text="Introduïu els detalls del vostre compte de RW",
+            font=("Arial", 12),
+            bg="#f5f5f5",
+            fg="#666666"
+        ).pack(pady=5)
+
+        # Campo de correo/nombre de usuario
+        tk.Label(root, text="Correu electrònic o nom d'usuari", font=("Arial", 10), bg="#f5f5f5").pack(pady=(20, 5))
+        nonlocal username_entry
+        username_entry = tk.Entry(root, font=("Arial", 12), width=30, bd=1, relief="solid")
         username_entry.pack(pady=5)
 
-        tk.Label(root, text="Password:", font=("Arial", 12), bg="#f5f5f5").pack(pady=5)
-        password_entry = tk.Entry(root, show="*", font=("Arial", 12), width=25)
+        # Campo de contraseña
+        tk.Label(root, text="Contrasenya", font=("Arial", 10), bg="#f5f5f5").pack(pady=(20, 5))
+        nonlocal password_entry
+        password_entry = tk.Entry(root, font=("Arial", 12), width=30, bd=1, relief="solid", show="*")
         password_entry.pack(pady=5)
 
-        tk.Button(root, text="Login", font=("Arial", 12), bg="#444444", fg="white", width=15, command=handle_login).pack(pady=10)
-        login_status = tk.Label(root, text="", font=("Arial", 10), bg="#f5f5f5")
-        login_status.pack(pady=5)
+        # Botón de login
+        tk.Button(
+            root,
+            text="Inicia la sessió",
+            font=("Arial", 12, "bold"),
+            bg="#6f52ed",
+            fg="white",
+            width=20,
+            command=handle_login  # Vinculamos con la función de login existente
+        ).pack(pady=20)
 
-        tk.Button(root, text="Crear Cuenta", font=("Arial", 12), bg="#FF5733", fg="white", command=display_registration).pack(pady=10)
+        # Enlaces inferiores
+        tk.Label(root, text="Sou nou a RW?", font=("Arial", 10), bg="#f5f5f5", fg="#666666").pack(pady=(10, 0))
+        tk.Button(
+            root,
+            text="Crea un compte",
+            font=("Arial", 10),
+            bg="#f5f5f5",
+            fg="#6f52ed",
+            bd=0,
+            command=display_registration  # Cambiamos a la función de registro
+        ).pack()
+
+
 
     def display_registration():
-        def handle_registration():
+        def handle_registration(username_entry, password_entry, confirm_password_entry, registration_status):
             username = username_entry.get()
             password = password_entry.get()
             confirm_password = confirm_password_entry.get()
 
             if not username or not password or not confirm_password:
-                registration_status.config(text="Todos los campos son obligatorios", fg="red")
+                registration_status.config(text="Tots els camps són obligatoris", fg="red")
                 return
 
             if password != confirm_password:
-                registration_status.config(text="Las contraseñas no coinciden", fg="red")
+                registration_status.config(text="Les contrasenyes no coincideixen", fg="red")
                 return
 
             try:
                 registrar_usuario('contraseñas.json', username, password)
-                registration_status.config(text="Usuario registrado con éxito", fg="green")
+                registration_status.config(text="Usuari registrat amb èxit", fg="green")
                 display_login()
             except Exception as e:
-                messagebox.showerror("Error", f"Error durante el registro: {e}")
+                messagebox.showerror("Error", f"Error durant el registre: {e}")
+
 
         for widget in root.winfo_children():
             widget.destroy()
 
-        root.title("Registro de Usuario")
+        root.title("Registra't - RainbowWarriors")
+        root.geometry("400x500")
+        root.configure(bg="#f5f5f5")
 
-        tk.Label(root, text="Nombre de Usuario:").pack(pady=5)
-        username_entry = tk.Entry(root)
+        # Título principal
+        tk.Label(
+            root,
+            text="Registra't",
+            font=("Arial", 18, "bold"),
+            bg="#f5f5f5",
+            fg="#000000"
+        ).pack(pady=10)
+
+        tk.Label(
+            root,
+            text="Crea un compte amb els teus detalls",
+            font=("Arial", 12),
+            bg="#f5f5f5",
+            fg="#666666"
+        ).pack(pady=5)
+
+        # Campo de usuario
+        tk.Label(root, text="Nom d'usuari", font=("Arial", 10), bg="#f5f5f5").pack(pady=(20, 5))
+        username_entry = tk.Entry(root, font=("Arial", 12), width=30, bd=1, relief="solid")
         username_entry.pack(pady=5)
 
-        tk.Label(root, text="Contraseña:").pack(pady=5)
-        password_entry = tk.Entry(root, show="*")
+        # Campo de contraseña
+        tk.Label(root, text="Contrasenya", font=("Arial", 10), bg="#f5f5f5").pack(pady=(20, 5))
+        password_entry = tk.Entry(root, font=("Arial", 12), width=30, bd=1, relief="solid", show="*")
         password_entry.pack(pady=5)
 
-        tk.Label(root, text="Confirmar Contraseña:").pack(pady=5)
-        confirm_password_entry = tk.Entry(root, show="*")
+        # Campo de confirmar contraseña
+        tk.Label(root, text="Repetir Contrasenya", font=("Arial", 10), bg="#f5f5f5").pack(pady=(20, 5))
+        confirm_password_entry = tk.Entry(root, font=("Arial", 12), width=30, bd=1, relief="solid", show="*")
         confirm_password_entry.pack(pady=5)
 
-        registration_status = tk.Label(root, text="", fg="red")
-        registration_status.pack(pady=5)
+        # Estado del registro
+        registration_status = tk.Label(root, text="", font=("Arial", 10), bg="#f5f5f5", fg="red")
+        registration_status.pack(pady=10)
 
-        tk.Button(root, text="Registrar", command=handle_registration).pack(pady=10)
-        tk.Button(root, text="Volver", command=display_login).pack(pady=5)
+        # Botón de registro
+        tk.Button(
+            root,
+            text="Registrar-se",
+            font=("Arial", 12, "bold"),
+            bg="#6f52ed",
+            fg="white",
+            width=20,
+            command=lambda: handle_registration(username_entry, password_entry, confirm_password_entry, registration_status)
+        ).pack(pady=20)
+
+        # Botón para volver al login
+        tk.Button(
+            root,
+            text="Tornar al login",
+            font=("Arial", 10),
+            bg="#f5f5f5",
+            fg="#6f52ed",
+            bd=0,
+            command=display_login
+        ).pack(pady=10)
+
 
     root = tk.Tk()
     username_entry = None
