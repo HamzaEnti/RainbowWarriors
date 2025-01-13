@@ -1,6 +1,6 @@
 # pass_manager.py
 from inside_storage import pass_storage, get_passwords, delete_password, edit_password, usuari, servei, decrypt_storage
-from gui import display_ui
+from GUI_manager import display_ui
 
 
 
