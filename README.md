@@ -7,16 +7,16 @@ Rainbow Warriors és un gestor de contrasenyes segur i fàcil d’utilitzar diss
 - **Generació de contrasenyes**: Crea contrasenyes segures i aleatòries.
 - **Emmagatzematge segur**: Xifra i guarda les contrasenyes utilitzant mètodes criptogràfics moderns.
 - **Recuperació de contrasenyes**: Desxifra i recupera les contrasenyes guardades quan sigui necessari.
-- **Interfície gràfica fàcil d’utilitzar**: Una interfície senzilla basada en Tkinter i Pillow.
+- **Interfície gràfica fàcil d’utilitzar**: Una interfície senzilla basada en Tkinter.
 
 ## Estructura dels fitxers
 - `authentication.py`: Gestió de la lògica d’autenticació d’usuaris.
-- `gui.py`: Gestió de la interfície gràfica d’usuari.
+- `GUI_manager.py`: Gestió de la interfície gràfica d’usuari.
 - `inside_storage.py`: Proporciona emmagatzematge segur i gestió de contrasenyes.
 - `pass_decrypt.py`: Implementa la lògica per desxifrar contrasenyes.
 - `pass_encryption.py`: Gestió del xifrat de contrasenyes.
 - `pass_generator.py`: Generació de contrasenyes segures.
-- `pass_manager.py`: Coordina les funcionalitats principals del gestor de contrasenyes.
+- `main.py`: Coordina les funcionalitats principals del gestor de contrasenyes.
 
 ## Funcionalitats principals
 - **Generació de contrasenyes segures**: Genera contrasenyes complexes i úniques.
@@ -45,7 +45,7 @@ Segueix aquests passos per instal·lar i executar l'aplicació:
    ```
 4. Executa l'aplicació:
    ```bash
-   python pass_manager.py
+   python main.py
    ```
 
 ## Preguntes freqüents
@@ -53,8 +53,5 @@ Segueix aquests passos per instal·lar i executar l'aplicació:
 No, totes les contrasenyes es guarden localment per garantir la privadesa.
 
 **2. Què faig si oblido la meva contrasenya principal?**  
-No és possible recuperar-la per seguretat. Hauràs de reiniciar el sistema.
-
-**3. És segur compartir les contrasenyes generades?**  
-Només comparteix contrasenyes en entorns segurs i amb xifrat.
+No és possible recuperar-la per seguretat. Hauràs de reiniciar el programa.
 
