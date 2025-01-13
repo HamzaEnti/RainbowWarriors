@@ -6,5 +6,5 @@ def pass_generator2(length):
         raise ValueError("La longitud debe ser un número positivo.")
     alfabet = string.asciiletters + string.digits + string.punctuation
 
-    GENERATEDPASSWORD = "".join(secrets.choice(alfabet) for  in range(length))
+    GENERATEDPASSWORD = "".join(secrets.choice(alfabet) for _ in range(length))
     return GENERATEDPASSWORD
